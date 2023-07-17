@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Auth Text</title>
+</head>
+
+<body>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-functions.js"></script>
+
+    <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-analytics.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-firestore.js"></script>
+
+    <script src="firebaseconfig.js"></script>
+    <script src="main.js"></script>
+
+
+    <div id="login">
+        <h1>ログインしてください</h1>
+        <input type="text" placeholder="UserId" id="userid" />
+        <button onclick="handleLoginRequest()">ログイン</button>
+        <p>message: <span id="tokenMessage"></span></p>
+    </div>
+    <div id="token-form" style="display: none;">
+        <input type="text" placeholder="UserId" id="token" />
+        <button onclick="handleTokenLogin()">Token ログイン</button> 
+    </div>
+    <div id="loggedin" style="display: none;">
+        <h1>ログインしました</h1>
+        <p>UserId: <span id="useridfield"></span></p>
+        <button onclick="handleLogout()">ログアウト</button>
+    </div>
+
+</body>
+
+</html>
