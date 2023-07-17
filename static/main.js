@@ -1,46 +1,9 @@
-
-
-// Replace with your cloud functions location
 const functionLocation = 'asia-northeast1';
 
-// Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 
-// document
-//     .getElementById('signout')
-//     .addEventListener('click', () => firebase.auth().signOut());
-
-function handleCustomLogin(token) {
-    console.log(token)
-    firebase.auth().signInWithCustomToken(token).catch(function (error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error)
-        // ...
-    });
-}
-
-function handleTokenLogin() {
-    const token = document.getElementById("token").value;
-    console.log(token)
-    fetch("https://auth.kokopi.me/token?token=" + token).then(
-        async (res) => {
-            const result = await res.json()
-            if (result.success) {
-                console.log(result)
-                handleCustomLogin(result.token)
-            } else {
-                location.reload()
-            }
-        })
-}
-
-function handleLogout() {
-    firebase.auth().signOut()
-}
-
+// ユーザーIDを送って、認証コードをもらう
 function handleLoginRequest() {
     const userId = document.getElementById("userid").value;
     fetch("https://auth.kokopi.me/userId?userId=" + userId).then(
@@ -55,6 +18,37 @@ function handleLoginRequest() {
         })
 }
 
+// 認証コードを送って、tokenをもらう
+function handleTokenLogin() {
+    const token = document.getElementById("token").value;
+    fetch("https://auth.kokopi.me/token?token=" + token).then(
+        async (res) => {
+            const result = await res.json()
+            if (result.success) {
+                console.log(result)
+                handleCustomLogin(result.token)
+            } else {
+                location.reload()
+            }
+        })
+}
+
+// バックエンドからもらってきたtokenを使ってログインする
+function handleCustomLogin(token) {
+    console.log(token)
+    firebase.auth().signInWithCustomToken(token).catch(function (error) {
+        console.log(error)
+    });
+}
+
+
+// ログアウト
+function handleLogout() {
+    firebase.auth().signOut()
+}
+
+
+// ログイン状態の変化で表示を切り替える
 firebase.auth().onAuthStateChanged((firebaseUser) => {
     if (firebaseUser) {
         console.log("login")
